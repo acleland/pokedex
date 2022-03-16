@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import PokeCard from '../../components/PokeCard/PokeCard';
 import { fetchPokemon } from '../../services/fetch';
+
+import './Main.css';
 
 export default function Main() {
   const [pokeList, setPokeList] = useState([]);
@@ -15,12 +18,11 @@ export default function Main() {
 
   return (
     <main>
-      Main
-      <ul>
+      <div className="poke-container">
         {pokeList.map((item) => (
-          <li key={item.id}>{item.pokemon}</li>
+          <PokeCard key={item.id} {...item} />
         ))}
-      </ul>
+      </div>
     </main>
   );
 }
