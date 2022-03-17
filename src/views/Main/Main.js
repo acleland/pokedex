@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PokeCard from '../../components/PokeCard/PokeCard';
-import { fetchByType, fetchPokemon, fetchTypes } from '../../services/fetch';
+
+import { fetchByType, fetchPokemon, fetchTypes, fetchFiltered } from '../../services/fetch';
 
 import './Main.css';
 import TypeSelect from '../../components/TypeSelect/TypeSelect';
@@ -12,15 +13,16 @@ export default function Main() {
   const [types, setTypes] = useState([]);
   const [type, setType] = useState('all');
   const [searchText, setSearchText] = useState('');
+  const [query, setQuery] = useState('');
 
-  // getting all the pokemon and setting to the pokeList
-  useEffect(() => {
-    const fetchData = async () => {
-      const pokeData = await fetchPokemon();
-      setPokeList(pokeData);
-    };
-    fetchData();
-  }, []);
+  // // getting all the pokemon and setting to the pokeList
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const pokeData = await fetchPokemon();
+  //     setPokeList(pokeData);
+  //   };
+  //   fetchData();
+  // }, []);
 
   // getting the types
   useEffect(() => {
@@ -32,24 +34,38 @@ export default function Main() {
   }, []);
 
   // Filtered by type useEffect
+  // useEffect(() => {
+  //   const fetchFilteredByType = async () => {
+  //     const pokemonByType = await fetchByType(type);
+  //     setPokeList(pokemonByType);
+  //   };
+  //   if (type) {
+  //     fetchFilteredByType();
+  //   }
+  // }, [type]);
+
+  // Filter by type and search
   useEffect(() => {
-    const fetchFilteredByType = async () => {
-      const pokemonByType = await fetchByType(type);
-      setPokeList(pokemonByType);
+    const getFiltered = async () => {
+      const pokemon = await fetchFiltered(type, searchText);
+      setPokeList(pokemon);
     };
-    if (type) {
-      fetchFilteredByType();
-    }
-  }, [type]);
+    getFiltered();
+  }, [type, query]);
 
   // Event handlers for searching by name
   function handleChange(e) {
     setSearchText(e.target.value);
   }
 
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setQuery(searchText);
+  }
+
   return (
     <main>
-      <Search {...{ searchText, handleChange }} />
+      <Search {...{ searchText, handleChange, handleSubmit }} />
       <TypeSelect types={types} type={type} setType={setType} />
       <div className="poke-container">
         {pokeList.map((item) => (

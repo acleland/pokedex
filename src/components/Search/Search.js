@@ -6,7 +6,7 @@ export default function Search({ searchText, handleChange, handleSubmit }) {
     <form onSubmit={handleSubmit}>
       <label htmlFor="search"></label>
       <input type="text" name="search" value={searchText} onChange={handleChange} />
-      <button>Search Pokemon by Name</button>
+      <button>Search</button>
     </form>
   );
 }

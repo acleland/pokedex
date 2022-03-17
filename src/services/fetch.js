@@ -21,3 +21,19 @@ export async function fetchByType(type) {
   const data = await resp.json();
   return data.results;
 }
+
+export async function fetchFiltered(type, searchText) {
+  const params = new URLSearchParams();
+  if (searchText) {
+    params.set('pokemon', searchText);
+  }
+
+  if (type !== 'all') {
+    params.set('type', type);
+  }
+  const resp = await fetch(
+    `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
+  );
+  const data = await resp.json();
+  return data.results;
+}
