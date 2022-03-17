@@ -1,4 +1,3 @@
-import { getByLabelText } from '@testing-library/react';
 import React from 'react';
 
 export default function Search({ searchText, handleChange, handleSubmit }) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import PokeCard from '../../components/PokeCard/PokeCard';
 
-import { fetchByType, fetchPokemon, fetchTypes, fetchFiltered } from '../../services/fetch';
+import { fetchTypes, fetchFiltered } from '../../services/fetch';
 
 import './Main.css';
 import TypeSelect from '../../components/TypeSelect/TypeSelect';
@@ -47,7 +47,7 @@ export default function Main() {
   // Filter by type and search
   useEffect(() => {
     const getFiltered = async () => {
-      const pokemon = await fetchFiltered(type, searchText);
+      const pokemon = await fetchFiltered(type, query);
       setPokeList(pokemon);
     };
     getFiltered();
