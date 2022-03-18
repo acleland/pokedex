@@ -7,6 +7,8 @@ import { fetchTypes, fetchFiltered } from '../../services/fetch';
 import './Main.css';
 import TypeSelect from '../../components/TypeSelect/TypeSelect';
 import Search from '../../components/Search/Search';
+import PageControls from '../../components/PageControls/PageControls';
+// const perPage = 10;
 
 export default function Main() {
   const [pokeList, setPokeList] = useState([]);
@@ -14,15 +16,7 @@ export default function Main() {
   const [type, setType] = useState('all');
   const [searchText, setSearchText] = useState('');
   const [query, setQuery] = useState('');
-
-  // // getting all the pokemon and setting to the pokeList
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const pokeData = await fetchPokemon();
-  //     setPokeList(pokeData);
-  //   };
-  //   fetchData();
-  // }, []);
+  const [page, setPage] = useState(1);
 
   // getting the types
   useEffect(() => {
@@ -33,18 +27,7 @@ export default function Main() {
     getTypes();
   }, []);
 
-  // Filtered by type useEffect
-  // useEffect(() => {
-  //   const fetchFilteredByType = async () => {
-  //     const pokemonByType = await fetchByType(type);
-  //     setPokeList(pokemonByType);
-  //   };
-  //   if (type) {
-  //     fetchFilteredByType();
-  //   }
-  // }, [type]);
-
-  // Filter by type and search
+  // getting filtered data from the api
   useEffect(() => {
     const getFiltered = async () => {
       const pokemon = await fetchFiltered(type, query);
@@ -67,6 +50,7 @@ export default function Main() {
     <main>
       <Search {...{ searchText, handleChange, handleSubmit }} />
       <TypeSelect types={types} type={type} setType={setType} />
+      <PageControls {...{ page, setPage }} />
       <div className="poke-container">
         {pokeList.map((item) => (
           <PokeCard key={item.id} {...item} />
