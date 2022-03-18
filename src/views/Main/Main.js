@@ -7,6 +7,7 @@ import { fetchTypes, fetchFiltered } from '../../services/fetch';
 import './Main.css';
 import TypeSelect from '../../components/TypeSelect/TypeSelect';
 import Search from '../../components/Search/Search';
+import SortControl from '../../components/SortControl/SortControl';
 import PageControls from '../../components/PageControls/PageControls';
 
 export default function Main() {
@@ -18,6 +19,10 @@ export default function Main() {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('pokemon');
+  const [sortOrder, setSortOrder] = useState('asc');
+
+  const sortOptions = ['pokemon', 'attack', 'defense', 'hp'];
 
   // getting the types
   useEffect(() => {
@@ -31,12 +36,12 @@ export default function Main() {
   // getting filtered data from the api
   useEffect(() => {
     const getFiltered = async () => {
-      const pokemon = await fetchFiltered({ type, query, page, perPage });
+      const pokemon = await fetchFiltered({ type, query, page, perPage, sortBy, sortOrder });
       setPokeList(pokemon);
       setLoading(false);
     };
     getFiltered();
-  }, [type, query, page, perPage]);
+  }, [type, query, page, perPage, sortBy, sortOrder]);
 
   // Event handlers for searching by name
   function handleChange(e) {
@@ -56,6 +61,7 @@ export default function Main() {
     <main>
       <Search {...{ searchText, handleChange, handleSubmit }} />
       <TypeSelect types={types} type={type} setType={setType} />
+      <SortControl options={sortOptions} {...{ sortBy, setSortBy, setSortOrder }} />
       <PageControls {...{ page, setPage }} />
       <div className="poke-container">
         {pokeList.map((item) => (
