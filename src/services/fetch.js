@@ -22,15 +22,18 @@ export async function fetchByType(type) {
   return data.results;
 }
 
-export async function fetchFiltered(type, searchText) {
+export async function fetchFiltered({ type, query, page, perPage }) {
   const params = new URLSearchParams();
-  if (searchText) {
-    params.set('pokemon', searchText);
+  if (query) {
+    params.set('pokemon', query);
   }
 
   if (type !== 'all') {
     params.set('type', type);
   }
+
+  params.set('page', page);
+  params.set('perPage', perPage);
   const resp = await fetch(
     `https://pokedex-alchemy.herokuapp.com/api/pokedex?${params.toString()}`
   );
