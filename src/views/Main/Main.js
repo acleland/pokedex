@@ -17,11 +17,12 @@ export default function Main() {
   const [searchText, setSearchText] = useState('');
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  // const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('pokemon');
   const [sortOrder, setSortOrder] = useState('asc');
 
+  const perPage = 10;
   const sortOptions = ['pokemon', 'attack', 'defense', 'hp'];
 
   // getting the types
