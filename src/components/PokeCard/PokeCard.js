@@ -21,7 +21,7 @@ export default function PokeCard(pokemon) {
           <td>{pokemon.defense}</td>
         </tr>
         <tr>
-          <th>hp</th>
+          <th>hp:</th>
           <td>{pokemon.hp}</td>
         </tr>
       </table>

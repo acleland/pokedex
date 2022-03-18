@@ -17,6 +17,7 @@ export default function Main() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
+  const [loading, setLoading] = useState(true);
 
   // getting the types
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function Main() {
     const getFiltered = async () => {
       const pokemon = await fetchFiltered({ type, query, page, perPage });
       setPokeList(pokemon);
+      setLoading(false);
     };
     getFiltered();
   }, [type, query, page, perPage]);
@@ -44,6 +46,10 @@ export default function Main() {
   async function handleSubmit(e) {
     e.preventDefault();
     setQuery(searchText);
+  }
+
+  if (loading) {
+    return <p>loading...</p>;
   }
 
   return (
