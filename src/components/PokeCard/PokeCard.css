@@ -1,0 +1,11 @@
+.poke-card {
+  margin: 1em;
+}
+
+.poke-card img {
+  width: 100px;
+}
+
+.poke-name {
+  font-weight: normal;
+}
